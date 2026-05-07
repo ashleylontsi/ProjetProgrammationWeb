@@ -1,18 +1,18 @@
-/* 1. Importation d'une police plus moderne (optionnel mais conseillé) */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
 
 body {
     font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-    color: #2d3436; /* Un gris très sombre, plus doux que le noir */
-    line-height: 1.7; /* Pour que ce soit super aéré */
+    color: #2d3436; 
+    line-height: 1.7; 
     -webkit-font-smoothing: antialiased;
 }
 
-/* 2. Style des Titres (H1, H2, H3) */
+/*  Style des Titres (H1, H2, H3) */
 h1, h2, h3 {
-    color: #000080; /* Bleu marine EFREI */
-    font-weight: 800; /* Très gras pour le style */
-    letter-spacing: -0.02em; /* Un peu serré pour le look pro */
+    color: #000080; 
+    font-weight: 800; 
+    letter-spacing: -0.02em; 
     margin-bottom: 1rem;
 }
 
@@ -20,7 +20,7 @@ h1 { font-size: 3rem; text-transform: uppercase; color: #ff1493; }
 h2 { font-size: 2.2rem; border-bottom: 2px solid #ff1493; display: inline-block; padding-bottom: 5px; }
 h3 { font-size: 1.5rem; }
 
-/* 3. Style des Paragraphes (Tout le texte classique) */
+/* 3. Style des Paragraphes */
 p {
     font-size: 1.1rem;
     font-weight: 400;
@@ -46,7 +46,7 @@ a {
     color: #ff1493;
 }
 
-/* 5. Le Footer cliquable (pour qu'il ressorte mieux) */
+/* 5. Le Footer cliquable */
 .footer-content h3 {
     color: #ff1493;
     font-size: 1.8rem;
@@ -59,7 +59,7 @@ a {
 }
 
 :root {
-    --main-pink: #ff477e; /* Le rose demandé */
+    --main-pink: #ff477e; /* Le rose*/
     --light-pink: #fff0f3;
     --dark-grey: #2d2d2d;
 }
@@ -71,7 +71,7 @@ body {
     color: var(--dark-grey);
 }
 
-/* Header & Navigation (cite: 50, 52) */
+/* Header & Navigation */
 header {
     background-color: white;
     border-bottom: 3px solid var(--main-pink);
@@ -105,7 +105,7 @@ nav a:hover {
     color: var(--main-pink);
 }
 
-/* Sections (cite: 48) */
+/* Sections */
 .hero {
     background-color: var(--light-pink);
     padding: 60px 5%;
@@ -113,7 +113,7 @@ nav a:hover {
 }
 
 main {
-    padding: 0 10%; /* Aligne ton texte avec le logo et le menu (cite: 40, 79) */
+    padding: 0 10%; 
     display: block;
 }
 
@@ -128,24 +128,24 @@ main {
 }
 
 .carousel-placeholder {
-    height: 400px; /* Tu peux ajuster la hauteur selon tes besoins */
-    overflow: hidden; /* Coupe ce qui dépasse */
-    border: 2px solid var(--main-pink); /* Optionnel : un contour rose solide */
+    height: 400px; 
+    overflow: hidden; 
+    border: 2px solid var(--main-pink); 
 }
 
 .img-hero {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* L'image s'adapte sans être déformée */
+    object-fit: cover; 
 }
 
-/* Responsive Design (cite: 40, 124) */
+/* Responsive Design */
 @media (max-width: 768px) {
     header { flex-direction: column; }
     nav ul { padding: 0; }
 }
 
-/* Footer (cite: 53) */
+/* Footer */
 footer {
     background: var(--dark-grey);
     color: white;
@@ -171,12 +171,12 @@ footer a {
     padding: 40px 0;
     margin-bottom: 40px;
     transition: all 0.3s ease;
-    box-sizing: border-box; /* Très important pour que la bordure ne fasse pas déborder la page */
+    box-sizing: border-box; 
 }
 
 .bachelor-full-width:hover {
     background: #ffe4e1;
-    border-color: #ff69b4; /* Le contour devient rose au survol pour le style */
+    border-color: #ff69b4; /* Le contour devient rose pour le style */
     cursor: pointer;
 }
 
@@ -201,7 +201,7 @@ footer a {
 }
 
 .bachelor-full-width:hover {
-    background: #ffe4e1; /* Un peu plus foncé au survol */
+    background: #ffe4e1; /* Un peu plus foncé*/
     cursor: pointer;
 }
 
@@ -218,7 +218,7 @@ footer a {
     
     /* CONTOUR BLEU MARINE */
     border: 3px solid #000080; 
-    box-shadow: 0 10px 20px rgba(0, 0, 128, 0.1); /* Ombre bleutée légère */
+    box-shadow: 0 10px 20px rgba(0, 0, 128, 0.1); 
     
     box-sizing: border-box;
     transition: all 0.3s ease;
@@ -226,7 +226,7 @@ footer a {
 
 .card-bachelor-full:hover {
     transform: translateY(-5px);
-    background-color: #f0f4ff; /* Très léger fond bleu au survol */
+    background-color: #f0f4ff; /* Très léger fond bleu */
 }
 
 .card-bachelor-full h3 {
@@ -246,7 +246,7 @@ footer a {
     font-weight: bold;
 }
 
-/* LES CARTES MAJEURES RESTENT EN ROSE (Comme sur ton image) */
+/* LES CARTES MAJEURES RESTENT EN ROSE*/
 .card-majeure {
     background: white;
     border-radius: 20px;
@@ -265,7 +265,7 @@ footer a {
     margin: 0 auto;
 }
 
-/* LA CARTE BACHELOR (Celle avec le cadre bleu marine) */
+/* LA CARTE BACHELOR*/
 .card-link-bachelor {
     grid-column: 1 / -1; /* FORCE LA CARTE SUR TOUTE LA LARGEUR */
     text-decoration: none;
@@ -281,7 +281,7 @@ footer a {
     align-items: center;
     justify-content: center; /* Centre le contenu horizontalement */
     gap: 50px;
-    border: 3px solid #000080; /* Ton cadre bleu marine */
+    border: 3px solid #000080; 
     box-shadow: 0 10px 20px rgba(0, 0, 128, 0.1);
     transition: all 0.3s ease;
 }
@@ -291,7 +291,7 @@ footer a {
     background-color: #f8f9ff;
 }
 
-/* Centre le texte à l'intérieur pour un rendu plus propre */
+/* Centre le texte à l'intérieur*/
 .card-text {
     text-align: center;
     max-width: 600px;
@@ -311,7 +311,6 @@ footer a {
 
 .card-majeure:hover {
     transform: translateY(-10px);
-    /* Au survol, on peut faire briller le contour en rose pour garder ton thème */
     border-color: #ff69b4; 
     box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
 }
@@ -326,13 +325,13 @@ footer a {
 }
 
 .bachelor-full-width:hover {
-    background: #fff0f5; /* Devient un peu plus rose au survol */
+    background: #fff0f5; /* Devient un peu plus rose */
     cursor: pointer;
 }
 
 /* Centre le contenu à l'intérieur du bandeau */
 .bachelor-content {
-    max-width: 1200px; /* Aligné avec ta grille en dessous */
+    max-width: 1200px; 
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -383,7 +382,7 @@ footer a {
     color: #666;
 }
 
-/* On réutilise ton badge mais sans le margin-top */
+
 .badge-section .badge {
     margin-top: 0; 
 }
@@ -406,7 +405,6 @@ footer a {
     margin-top: 0; 
 }
 
-/* Pour que ça reste beau sur téléphone */
 @media (max-width: 768px) {
     .card-bachelor-horizontal {
         flex-direction: column;
@@ -421,11 +419,11 @@ footer a {
 
 .card-link {
     text-decoration: none;
-    color: inherit; /* Garde la couleur du texte que tu as choisie */
+    color: inherit; /* Garde la couleur du texte choisie */
     display: block;
 }
 
-/* --- Le reste de ton code reste identique --- */
+
 .formations-hero {
     text-align: center;
     padding: 50px 20px;
@@ -489,7 +487,6 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Ton reste du CSS pour le footer ne change pas */
 .footer-about {
     background-color: #ffffff;
     border-top: 2px solid #ff69b4; /* Ligne rose de séparation */
@@ -533,7 +530,7 @@ html {
 }
 
 .page-header h1 {
-    color: #ff1493; /* Ton rose signature */
+    color: #ff1493; 
     font-size: 3.5rem;
     margin: 10px 0;
     text-transform: uppercase;
@@ -577,7 +574,7 @@ html {
 
 .bachelor-row:hover {
     transform: scale(1.02);
-    border-color: #ff1493; /* Devient rose au survol */
+    border-color: #ff1493; /* Devient rose */
     box-shadow: 0 10px 20px rgba(255, 20, 147, 0.1);
 }
 
@@ -613,7 +610,6 @@ html {
 }
 
 .bachelor-hero {
-    /* Un fond rose très léger vers le blanc pour donner de la profondeur */
     background: linear-gradient(135deg, #fff0f5 0%, #ffffff 100%);
     padding: 80px 20px;
     text-align: center;
@@ -626,7 +622,7 @@ html {
 }
 
 .bachelor-hero h1 {
-    color: #ff1493; /* Ton rose vif */
+    color: #ff1493; /* rose vif */
     font-size: 3.2rem;
     font-weight: 800;
     margin-bottom: 20px;
@@ -637,7 +633,7 @@ html {
 .hero-separator {
     width: 60px;
     height: 5px;
-    background-color: #000080; /* Petite barre bleu marine pour le style */
+    background-color: #000080; /* Petite barre bleu marine*/
     margin: 0 auto 25px auto;
     border-radius: 10px;
 }
@@ -659,7 +655,7 @@ html {
     align-items: flex-start; /* Aligne en haut pour les longs textes */
     background: white;
     border: 2px solid #000080;
-    border-radius: 12px; /* Un peu plus carré pour le côté sérieux */
+    border-radius: 12px; 
     padding: 35px 45px;
     margin-bottom: 25px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
@@ -676,14 +672,14 @@ html {
     color: #333;
     line-height: 1.8; /* Augmente l'espace entre les lignes pour la lecture */
     font-size: 1.05rem;
-    text-align: justify; /* Pour un rendu très "document pro" */
+    text-align: justify; 
 }
 
 .mini-badge {
     background: #ff1493;
     color: white;
     padding: 8px 18px;
-    border-radius: 4px; /* Carré pour le look pro */
+    border-radius: 4px; 
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 1px;
