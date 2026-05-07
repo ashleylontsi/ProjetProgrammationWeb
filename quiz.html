@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Orientation - EFREI Paris</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* === QUIZ SPECIFIC STYLES === */
+        .quiz-hero {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffffff 100%);
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 2px solid #000080;
+        }
+
+        .quiz-hero h1 {
+            color: #ff1493;
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .quiz-hero-separator {
+            width: 60px;
+            height: 5px;
+            background-color: #000080;
+            margin: 0 auto 25px auto;
+            border-radius: 10px;
+        }
+
+        .quiz-hero p {
+            color: #000080;
+            font-size: 1.4rem;
+            font-weight: 500;
+            line-height: 1.4;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* === QUIZ CONTAINER === */
+        .quiz-container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px 60px;
+        }
+
+        /* === PROGRESS BAR === */
+        .progress-container {
+            margin-bottom: 40px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            color: #000080;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .progress-counter {
+            color: #ff1493;
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .progress-bar-track {
+            width: 100%;
+            height: 8px;
+            background: #ffe4e1;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #ffc0cb;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(to right, #ff1493, #000080);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* === QUESTION CARD === */
+        .question-card {
+            background: white;
+            border: 2px solid #000080;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(0, 0, 128, 0.08);
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #000080;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 5px 14px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            color: #1a1a2e;
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        /* === ANSWER OPTIONS === */
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            background: #fafafa;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 18px 22px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.25s ease;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        .option-btn:hover {
+            border-color: #ff1493;
+            background: #fff0f5;
+            transform: translateX(6px);
+        }
+
+        .option-btn.selected {
+            border-color: #ff1493;
+            background: linear-gradient(135deg, #fff0f5, #ffe4ef);
+            box-shadow: 0 4px 12px rgba(255, 20, 147, 0.15);
+        }
+
+        .option-letter {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            background: #000080;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            transition: background 0.25s;
+        }
+
+        .option-btn.selected .option-letter {
+            background: #ff1493;
+        }
+
+        .option-text {
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* === NAVIGATION BUTTONS === */
+        .quiz-nav {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #ff1493, #c0006a);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 36px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .btn-next.active {
+            opacity: 1;
+            pointer-events: all;
+            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.35);
+        }
+
+        .btn-next.active:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(255, 20, 147, 0.45);
+        }
+
+        /* === RESULTS PAGE === */
+        .results-container {
+            max-width: 860px;
+            margin: 60px auto;
+            padding: 0 20px 60px;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .results-title-card {
+            background: white;
+            border: 2px solid #000080;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 128, 0.08);
+        }
+
+        .results-title-card h2 {
+            color: #ff1493;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            border: none;
+            display: block;
+            padding: 0;
+        }
+
+        .results-title-card p {
+            color: #555;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        /* === PIE CHART SECTION === */
+        .results-chart-section {
+            background: white;
+            border: 2px solid #000080;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 128, 0.08);
+        }
+
+        .results-chart-section h3 {
+            color: #000080;
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .chart-layout {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* === DONUT CHART === */
+        .donut-wrapper {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            flex-shrink: 0;
+        }
+
+        .donut-svg {
+            width: 220px;
+            height: 220px;
+            transform: rotate(-90deg);
+        }
+
+        .donut-bg {
+            fill: none;
+            stroke: #f0f0f0;
+            stroke-width: 28;
+        }
+
+        .donut-center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .donut-center-text .top-pct {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ff1493;
+            display: block;
+            line-height: 1;
+        }
+
+        .donut-center-text .top-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #000080;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-top: 4px;
+            max-width: 90px;
+            line-height: 1.2;
+        }
+
+        /* === LEGEND === */
+        .legend-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .legend-info {
+            flex: 1;
+        }
+
+        .legend-name {
+            font-weight: 700;
+            color: #1a1a2e;
+            font-size: 0.95rem;
+        }
+
+        .legend-bar-track {
+            height: 6px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+
+        .legend-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1.2s ease 0.3s;
+        }
+
+        .legend-pct {
+            font-weight: 800;
+            font-size: 1rem;
+            min-width: 44px;
+            text-align: right;
+        }
+
+        /* === TOP MATCH CARD === */
+        .top-match-card {
+            background: white;
+            border: 2px solid #ff1493;
+            border-radius: 16px;
+            padding: 35px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(255, 20, 147, 0.1);
+        }
+
+        .top-match-card h3 {
+            color: #ff1493;
+            font-size: 1.4rem;
+            margin-bottom: 6px;
+        }
+
+        .top-match-card .match-title {
+            color: #000080;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .top-match-card p {
+            color: #444;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .match-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 28px;
+            background: #000080;
+            color: white;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+
+        .match-link:hover {
+            background: #ff1493;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 20, 147, 0.3);
+        }
+
+        /* === RETRY BUTTON === */
+        .retry-btn {
+            display: block;
+            width: fit-content;
+            margin: 0 auto;
+            padding: 14px 36px;
+            background: white;
+            color: #000080;
+            border: 2px solid #000080;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .retry-btn:hover {
+            background: #000080;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .quiz-hero h1 { font-size: 2.2rem; }
+            .question-card { padding: 25px 20px; }
+            .results-chart-section { padding: 25px 20px; }
+            .chart-layout { gap: 30px; }
+            .top-match-card { padding: 25px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="formations.html">Formations</a></li>
+                <li><a href="equipe.html">Équipe</a></li>
+                <li><a href=".html" class="active">Quiz</a></li>
+                <li><a href="#about">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="quiz-hero">
+        <div class="hero-content">
+            <h1>Quiz d'Orientation</h1>
+            <div class="quiz-hero-separator"></div>
+            <p>5 questions pour découvrir la majeure faite pour vous.</p>
+        </div>
+    </section>
+
+    <!-- QUIZ -->
+    <div class="quiz-container" id="quizSection">
+
+        <!-- PROGRESS -->
+        <div class="progress-container">
+            <div class="progress-info">
+                <span class="progress-label">Votre progression</span>
+                <span class="progress-counter" id="progressCounter">Question 1 / 5</span>
+            </div>
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="progressBarFill"></div>
+            </div>
+        </div>
+
+        <!-- QUESTION CARD -->
+        <div class="question-card" id="questionCard">
+            <span class="question-number" id="questionNumber">Question 1</span>
+            <p class="question-text" id="questionText"></p>
+            <div class="options-grid" id="optionsGrid"></div>
+            <div class="quiz-nav">
+                <button class="btn-next" id="btnNext" onclick="nextQuestion()">
+                    Suivant →
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-container" id="resultsSection">
+
+        <div class="results-title-card">
+            <h2> Vos Résultats</h2>
+            <p>Voici la répartition de votre profil selon vos réponses.</p>
+        </div>
+
+        <!-- TOP MATCH -->
+        <div class="top-match-card" id="topMatchCard">
+            <h3>Votre meilleure correspondance </h3>
+            <div class="match-title" id="topMatchTitle">—</div>
+            <p id="topMatchDesc">—</p>
+            <a href="#" id="topMatchLink" class="match-link">Découvrir cette majeure →</a>
+        </div>
+
+        <!-- DONUT CHART -->
+        <div class="results-chart-section">
+            <h3>Répartition de votre profil</h3>
+            <div class="chart-layout">
+
+                <div class="donut-wrapper">
+                    <svg class="donut-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="donut-bg" cx="100" cy="100" r="70"/>
+                        <!-- Segments drawn by JS -->
+                        <circle class="donut-seg seg-cyber" cx="100" cy="100" r="70" fill="none" stroke-width="28"/>
+                        <circle class="donut-seg seg-bigdata" cx="100" cy="100" r="70" fill="none" stroke-width="28"/>
+                        <circle class="donut-seg seg-software" cx="100" cy="100" r="70" fill="none" stroke-width="28"/>
+                        <circle class="donut-seg seg-embedded" cx="100" cy="100" r="70" fill="none" stroke-width="28"/>
+                    </svg>
+                    <div class="donut-center-text">
+                        <span class="top-pct" id="donutTopPct">—</span>
+                        <span class="top-label" id="donutTopLabel">—</span>
+                    </div>
+                </div>
+
+                <div class="legend-list" id="legendList"></div>
+
+            </div>
+        </div>
+
+        <button class="retry-btn" onclick="restartQuiz()">↺ Recommencer le quiz</button>
+
+    </div>
+
+    <footer id="about" class="footer-about">
+        <a href="apropos.html" class="footer-clickable-area">
+            <div class="footer-content">
+                <h3>À propos</h3>
+                <p>Ce site a été réalisé dans le cadre d'un projet étudiant à l'EFREI Paris. Notre objectif est de présenter les différentes opportunités et spécialisations offertes par notre école.</p>
+                <p class="copyright">© 2026 Projet Web - EFREI Paris</p>
+            </div>
+        </a>
+    </footer>
+
+    <script>
+    // ============================================================
+    // QUIZ DATA
+    // ============================================================
+    const MAJEURS = {
+        cyber:     { label: "Cybersécurité",              color: "#ff1493", link: "cyber.html" },
+        bigdata:   { label: "Big Data & IA",              color: "#000080", link: "bigdata.html" },
+        software:  { label: "Software Engineering",       color: "#e63946", link: "software.html" },
+        embedded:  { label: "Systèmes Embarqués",         color: "#457b9d", link: "systemes-embarques.html" }
+    };
+
+    const DESCRIPTIONS = {
+        cyber:    "Vous êtes attiré·e par la protection des systèmes, les menaces invisibles et la stratégie défensive. La Cybersécurité est votre terrain de jeu : de la technique au management du risque.",
+        bigdata:  "Vous adorez trouver du sens dans les chiffres et imaginer l'avenir. La majeure Big Data & IA est faite pour vous : analyse, Machine Learning et prise de décision basée sur la donnée.",
+        software: "Vous aimez créer, construire et voir votre code prendre vie. Le Software Engineering est votre voie : de l'architecture logicielle à la mise en production.",
+        embedded: "Vous êtes fasciné·e par les objets intelligents et les systèmes qui interagissent avec le monde physique. Les Systèmes Embarqués, c'est la frontière entre le code et la machine."
+    };
+
+    const QUESTIONS = [
+        {
+            text: " C'est le week-end, vous avez du temps libre. Qu'est-ce que vous faites spontanément ?",
+            options: [
+                { text: "Je démonte un vieux appareil électronique pour comprendre comment il fonctionne.",      scores: { embedded: 3, cyber: 1 } },
+                { text: "Je joue à des jeux de stratégie ou j'essaie de trouver des failles.",  scores: { cyber: 3, bigdata: 1 } },
+                { text: "Je regarde beaucoup de séries et je cherche à comprendre pourquoi l'algorithme me fait ces suggestions.",       scores: { bigdata: 3, software: 1 } },
+                { text: "Je commence un projet perso : une appli, un site ou un petit jeu vidéo.",              scores: { software: 3, cyber: 1 } }
+            ]
+        },
+        { 
+            text: " Parmi ces matières, laquelle vous passionne le plus ?",
+            options: [
+                { text: "Les mathématiques pures : algèbre, cryptographie, théorie des nombres.",                    scores: { cyber: 3, bigdata: 2 } },
+                { text: "La physique et les systèmes : comprendre comment le monde réel interagit avec la machine.",  scores: { embedded: 3, software: 1 } },
+                { text: "Les algorithmes et l'optimisation : résoudre des problèmes complexes efficacement.",        scores: { software: 3, bigdata: 2 } },
+                { text: "Les statistiques et probabilités : faire parler les données et prédire l'avenir.",          scores: { bigdata: 3, cyber: 1 } }
+            ]
+        },        
+        {
+            text: " Un réseau social que vous utilisez subit une fuite massive de données. Qu'est-ce qui vous préoccupe le plus ?",
+            options: [
+                { text: "Est-ce que leurs développeurs ont mal sécurisé l'application ?",                                scores: { software: 3, cyber: 1 } },
+                { text: "Les serveurs et infrastructures ont-ils été mal configurés ?",                                 scores: { embedded: 3, software: 1 } },
+                { text: "Est-ce une attaque extérieure ou une vulnérabilité exploitée ?",                               scores: { cyber: 3, bigdata: 1 } },
+                { text: "Comment ont-ils stocké mes données ? Étaient-elles correctement anonymisées ?",                scores: { bigdata: 3, cyber: 1 } }
+            ]
+        },
+        {
+            text: " On vous propose 4 stages. Lequel choisissez-vous ?",
+            options: [
+                { text: "Analyste en sécurité dans une banque : détecter les fraudes et les attaques.",        scores: { cyber: 3, bigdata: 1 } },
+                { text: "Data Scientist dans une startup : prédire les tendances du marché.",                  scores: { bigdata: 3, cyber: 1 } },
+                { text: "Ingénieur logiciel: je développe l'architecture cachée derrière les sites et applis à grande échelle.", scores: { software: 3, embedded: 1 } },
+                { text: "Ingénieur systèmes embarqués : je programme les capteurs des chaînes d'assemblage (usines Tesla, Airbus, etc.)",   scores: { embedded: 3, software: 1 } }
+            ]
+        },
+        {
+            text: " Quel défi du monde réel vous donne le plus envie de contribuer ?",
+            options: [
+                { text: "Protéger les infrastructures critiques (hôpitaux, centrales) des cyberattaques.",     scores: { cyber: 3, embedded: 1 } },
+                { text: "Utiliser l'IA pour prédire et prévenir les pandémies avant qu'elles se propagent.",   scores: { bigdata: 3, cyber: 1 } },
+                { text: "Créer un logiciel accessible qui améliore la vie de millions de personnes.",          scores: { software: 3, bigdata: 1 } },
+                { text: "Concevoir les systèmes embarqués des satellites ou des robots médicaux.",             scores: { embedded: 3, software: 1 } }
+            ]
+        }
+    ];
+
+    // ============================================================
+    // STATE
+    // ============================================================
+    let currentQ = 0;
+    let selectedOption = null;
+    let totals = { cyber: 0, bigdata: 0, software: 0, embedded: 0 };
+
+    // ============================================================
+    // RENDER QUESTION
+    // ============================================================
+    function renderQuestion() {
+        const q = QUESTIONS[currentQ];
+        document.getElementById("questionNumber").textContent = `Question ${currentQ + 1}`;
+        document.getElementById("progressCounter").textContent = `Question ${currentQ + 1} / ${QUESTIONS.length}`;
+        document.getElementById("progressBarFill").style.width = `${(currentQ / QUESTIONS.length) * 100}%`;
+        document.getElementById("questionText").textContent = q.text;
+
+        const grid = document.getElementById("optionsGrid");
+        grid.innerHTML = "";
+        q.options.forEach((opt, i) => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerHTML = `
+                <div class="option-letter">${String.fromCharCode(65 + i)}</div>
+                <span class="option-text">${opt.text}</span>
+            `;
+            btn.addEventListener("click", () => selectOption(i, btn));
+            grid.appendChild(btn);
+        });
+
+        selectedOption = null;
+        document.getElementById("btnNext").classList.remove("active");
+
+        // Reset animation
+        const card = document.getElementById("questionCard");
+        card.style.animation = "none";
+        card.offsetHeight; // reflow
+        card.style.animation = "slideIn 0.4s ease";
+    }
+
+    function selectOption(index, btn) {
+        document.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        selectedOption = index;
+        document.getElementById("btnNext").classList.add("active");
+    }
+
+    function nextQuestion() {
+        if (selectedOption === null) return;
+
+        // Add scores
+        const q = QUESTIONS[currentQ];
+        const scores = q.options[selectedOption].scores;
+        for (const key in scores) {
+            totals[key] = (totals[key] || 0) + scores[key];
+        }
+
+        currentQ++;
+        if (currentQ < QUESTIONS.length) {
+            renderQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    // ============================================================
+    // SHOW RESULTS
+    // ============================================================
+    function showResults() {
+        document.getElementById("quizSection").style.display = "none";
+        document.getElementById("resultsSection").style.display = "block";
+
+        // Normalize to %
+        const total = Object.values(totals).reduce((a, b) => a + b, 0);
+        const pcts = {};
+        for (const key in totals) {
+            pcts[key] = Math.round((totals[key] / total) * 100);
+        }
+
+        // Sort descending
+        const sorted = Object.entries(pcts).sort((a, b) => b[1] - a[1]);
+
+        // Fix rounding to 100
+        let sum = sorted.reduce((a, b) => a + b[1], 0);
+        sorted[0][1] += (100 - sum);
+
+        // Top match
+        const top = sorted[0];
+        document.getElementById("topMatchTitle").textContent = MAJEURS[top[0]].label;
+        document.getElementById("topMatchDesc").textContent = DESCRIPTIONS[top[0]];
+        document.getElementById("topMatchLink").href = MAJEURS[top[0]].link;
+        document.getElementById("topMatchLink").textContent = `Découvrir ${MAJEURS[top[0]].label} →`;
+
+        // Donut center
+        document.getElementById("donutTopPct").textContent = `${top[1]}%`;
+        document.getElementById("donutTopLabel").textContent = MAJEURS[top[0]].label;
+
+        // Draw donut
+        drawDonut(sorted);
+
+        // Legend
+        buildLegend(sorted);
+    }
+
+    function drawDonut(sorted) {
+        const r = 70;
+        const circ = 2 * Math.PI * r; // ~439.8
+
+        const segClasses = ["seg-cyber", "seg-bigdata", "seg-software", "seg-embedded"];
+        const keys = sorted.map(s => s[0]);
+        const segs = document.querySelectorAll(".donut-seg");
+
+        // Reset all
+        segs.forEach(s => {
+            s.style.strokeDasharray = `0 ${circ}`;
+            s.style.strokeDashoffset = "0";
+            s.style.stroke = "transparent";
+        });
+
+        let offset = 0;
+        sorted.forEach(([key, pct], i) => {
+            const seg = document.querySelector(`.seg-${key}`) || segs[i];
+            seg.style.stroke = MAJEURS[key].color;
+            const dash = (pct / 100) * circ;
+            const gap = circ - dash;
+            seg.style.strokeDasharray = `${dash} ${gap}`;
+            seg.style.strokeDashoffset = -offset;
+            offset += dash;
+        });
+    }
+
+    function buildLegend(sorted) {
+        const legend = document.getElementById("legendList");
+        legend.innerHTML = "";
+        sorted.forEach(([key, pct]) => {
+            const item = document.createElement("div");
+            item.className = "legend-item";
+            item.innerHTML = `
+                <div class="legend-color" style="background:${MAJEURS[key].color}"></div>
+                <div class="legend-info">
+                    <div class="legend-name">${MAJEURS[key].label}</div>
+                    <div class="legend-bar-track">
+                        <div class="legend-bar-fill" style="background:${MAJEURS[key].color}; width:0%" data-width="${pct}%"></div>
+                    </div>
+                </div>
+                <div class="legend-pct" style="color:${MAJEURS[key].color}">${pct}%</div>
+            `;
+            legend.appendChild(item);
+        });
+
+        // Animate bars after render
+        requestAnimationFrame(() => {
+            document.querySelectorAll(".legend-bar-fill").forEach(bar => {
+                bar.style.width = bar.dataset.width;
+            });
+        });
+    }
+
+    // ============================================================
+    // RESTART
+    // ============================================================
+    function restartQuiz() {
+        currentQ = 0;
+        selectedOption = null;
+        totals = { cyber: 0, bigdata: 0, software: 0, embedded: 0 };
+        document.getElementById("quizSection").style.display = "block";
+        document.getElementById("resultsSection").style.display = "none";
+        document.getElementById("progressBarFill").style.width = "0%";
+        renderQuestion();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // ============================================================
+    // INIT
+    // ============================================================
+    renderQuestion();
+    </script>
+
+</body>
+</html>

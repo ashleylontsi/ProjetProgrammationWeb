@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Équipe Informatique - EFREI Paris</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* === TEAM PAGE SPECIFIC STYLES === */
+        .team-hero {
+            background: linear-gradient(135deg, #fce4ec 0%, #ffffff 100%);
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 2px solid #f8bbd0;
+        }
+
+        .team-hero h1 {
+            color: #d81b60;
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .team-hero-separator {
+            width: 60px;
+            height: 5px;
+            background-color: #f06292;
+            margin: 0 auto 25px auto;
+            border-radius: 10px;
+        }
+
+        .team-hero p {
+            color: #ad1457;
+            font-size: 1.4rem;
+            font-weight: 500;
+            line-height: 1.4;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .team-container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px 60px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .team-card {
+            background: white;
+            border: 1px solid #f8bbd0;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(216, 27, 96, 0.15);
+            border-color: #f06292;
+        }
+
+        .team-image {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            padding: 25px 0;
+            text-align: center;
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #d81b60;
+            border: 3px solid #f06292;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .team-info {
+            padding: 18px;
+            text-align: center;
+        }
+
+        .team-name {
+            color: #ad1457;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .team-role {
+            color: #d81b60;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .team-desc {
+            color: #666;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .team-specialty {
+            display: inline-block;
+            background: #fce4ec;
+            color: #ad1457;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .team-hero h1 { font-size: 2.2rem; }
+            .team-grid { gap: 20px; }
+            .team-name { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="formations.html">Formations</a></li>
+                <li><a href="equipe.html" class="active">Équipe</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="team-hero">
+        <div class="hero-content">
+            <h1>Notre Équipe</h1>
+            <div class="team-hero-separator"></div>
+            <p>Les experts qui vous accompagnent vers l'excellence en informatique.</p>
+        </div>
+    </section>
+
+    <div class="team-container">
+
+        <div class="team-grid">
+            
+            <!-- 1. LAYTH SLIMAN - Cybersécurité -->
+            <div class="team-card">
+                <div class="team-image"><div class="team-avatar">LS</div></div>
+                <div class="team-info">
+                    <h3 class="team-name">Layth Sliman</h3>
+                    <div class="team-role">Professeur / HDR</div>
+                    <div class="team-specialty">Cybersécurité & Blockchain</div>
+                    <p class="team-desc">Responsable de l'axe recherche Sécurité. Expert en cyberdéfense et confiance numérique.</p>
+                </div>
+            </div>
+
+            <!-- 2. KATARZYNA WEGRZYN-WOLSKA - Data & IA -->
+            <div class="team-card">
+                <div class="team-image"><div class="team-avatar">KW</div></div>
+                <div class="team-info">
+                    <h3 class="team-name">Katarzyna Wegrzyn-Wolska</h3>
+                    <div class="team-role">Professeure / HDR</div>
+                    <div class="team-specialty">Data & Intelligence Artificielle</div>
+                    <p class="team-desc">Directrice adjointe du laboratoire de recherche. Pilote l'axe Data & IA.</p>
+                </div>
+            </div>
+
+            <!-- 3. DARIO VIEIRA - Réseaux -->
+            <div class="team-card">
+                <div class="team-image"><div class="team-avatar">DV</div></div>
+                <div class="team-info">
+                    <h3 class="team-name">Dario Vieira</h3>
+                    <div class="team-role">Professeur associé</div>
+                    <div class="team-specialty">Réseaux & Communication</div>
+                    <p class="team-desc">Responsable de l'axe recherche Réseaux. Expert en infrastructures et cloud.</p>
+                </div>
+            </div>
+
+            <!-- 4. JACQUES AUGUSTIN - Software Engineering -->
+            <div class="team-card">
+                <div class="team-image"><div class="team-avatar">JA</div></div>
+                <div class="team-info">
+                    <h3 class="team-name">Jacques Augustin</h3>
+                    <div class="team-role">Responsable majeure Software</div>
+                    <div class="team-specialty">DevOps & Architecture</div>
+                    <p class="team-desc">Expert en transformation digitale et DevOps. Formé chez Accenture.</p>
+                </div>
+            </div>
+
+            <!-- 5. BOUSSAD AIT SALEM - Cybersécurité -->
+            <div class="team-card">
+                <div class="team-image"><div class="team-avatar">BA</div></div>
+                <div class="team-info">
+                    <h3 class="team-name">Boussad Ait Salem</h3>
+                    <div class="team-role">Enseignant-chercheur</div>
+                    <div class="team-specialty">Cybersécurité & Cloud</div>
+                    <p class="team-desc">Doctorat en cryptographie. Spécialiste des réseaux et de la sécurité.</p>
+                </div>
+            </div>
+
+            <!-- 6. FATEN CHAIEB-CHAKCHOUK - Data Science -->
+            <div class="team-card">
+                <div class="team-image"><div class="team-avatar">FC</div></div>
+                <div class="team-info">
+                    <h3 class="team-name">Faten Chaieb-chakchouk</h3>
+                    <div class="team-role">Professeure / HDR</div>
+                    <div class="team-specialty">Data Science & RV</div>
+                    <p class="team-desc">Responsable majeure Image & Réalité virtuelle. Expertise en IA avancée.</p>
+                </div>
+            </div>
+
+            <!-- 7. DJALLEL DILMI - Big Data & ML -->
+            <div class="team-card">
+                <div class="team-image"><div class="team-avatar">DD</div></div>
+                <div class="team-info">
+                    <h3 class="team-name">Djallel Dilmi</h3>
+                    <div class="team-role">Enseignant-chercheur</div>
+                    <div class="team-specialty">Big Data & Machine Learning</div>
+                    <p class="team-desc">Expert en Deep Learning et architectures de traitement avancées.</p>
+                </div>
+            </div>
+
+            <!-- 8. BENOIT CHARROUX - Sécurité & IA -->
+            <div class="team-card">
+                <div class="team-image"><div class="team-avatar">BC</div></div>
+                <div class="team-info">
+                    <h3 class="team-name">Benoit Charroux</h3>
+                    <div class="team-role">Enseignant-chercheur</div>
+                    <div class="team-specialty">Sécurité & Traitement image</div>
+                    <p class="team-desc">Docteur en électronique. Expert en reconnaissance de formes et cybersécurité.</p>
+                </div>
+            </div>
+
+            <!-- 9. NICOLAS FLASQUE - Pédagogie & Programmation -->
+            <div class="team-card">
+                <div class="team-image"><div class="team-avatar">NF</div></div>
+                <div class="team-info">
+                    <h3 class="team-name">Nicolas Flasque</h3>
+                    <div class="team-role">Ingénieur Pédagogique</div>
+                    <div class="team-specialty">Python & Algorithmique</div>
+                    <p class="team-desc">Docteur en informatique. 20+ ans d'expérience en programmation et pédagogie.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer id="about" class="footer-about">
+        <a href="apropos.html" class="footer-clickable-area">
+            <div class="footer-content">
+                <h3>À propos</h3>
+                <p>Ce site a été réalisé dans le cadre d'un projet étudiant à l'EFREI Paris. Notre objectif est de présenter les différentes opportunités et spécialisations offertes par notre école.</p>
+                <p class="copyright">© 2026 Projet Web - EFREI Paris</p>
+            </div>
+        </a>
+    </footer>
+
+</body>
+</html>
+           
