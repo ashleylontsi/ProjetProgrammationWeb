@@ -5,6 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Département Informatique - EFREI</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Style pour le planning ajouté */
+        .planning-section {
+            background: linear-gradient(135deg, #fce4ec, #ffffff);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 40px auto;
+            max-width: 800px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #f8bbd0;
+        }
+        .planning-section h3 {
+            color: #d81b60;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        /* Barre de recherche */
+        .search-container {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #fce4ec;
+            border-radius: 12px;
+        }
+        .search-container h4 {
+            color: #ad1457;
+            margin-bottom: 12px;
+            margin-top: 0;
+        }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 25px;
+            border: 1px solid #f8bbd0;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        .search-box button {
+            background: #d81b60;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .search-box button:hover {
+            background: #ad1457;
+        }
+        .result-count {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #ad1457;
+            text-align: right;
+        }
+        .event-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .event-table th, .event-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #f8bbd0;
+        }
+        .event-table th {
+            background-color: #fce4ec;
+            color: #ad1457;
+            font-weight: 700;
+        }
+        .event-table tr:hover {
+            background-color: #fce4ec;
+        }
+        .event-date {
+            font-weight: 700;
+            color: #d81b60;
+        }
+        .event-name {
+            color: #333;
+        }
+        .event-Bâtiment {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .no-result {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+        }
+        @media (max-width: 600px) {
+            .search-box input, .search-box button { flex: 100%; }
+        }
+    </style>
 </head>
 <body>
 
@@ -16,7 +114,9 @@
         <nav>
             <ul>
                 <li><a href="index.html">Accueil</a></li>
-                <li><a href="formations.html">Cours & Formations</a></li> <li><a href="equipe.html">Équipe</a></li> <li></li>
+                <li><a href="formations.html">Cours & Formations</a></li>
+                <li><a href="equipe.html">Équipe</a></li>
+                <li></li>
             </ul>
         </nav>
     </header>
@@ -26,8 +126,8 @@
             <h2>Bienvenue au Département Informatique</h2>
             <p>Découvrez l'excellence technique au cœur de l'EFREI.</p>
             <div class="carousel-placeholder">
-    <img src="photo-accueil.jpg" alt="Présentation du département" class="img-hero">
-</div>
+                <img src="photo-accueil.jpg" alt="Présentation du département" class="img-hero">
+            </div>
         </section>
 
         <section class="content-grid">
@@ -40,6 +140,36 @@
                 <p>Un environnement dynamique pour les futurs ingénieurs.</p>
             </article>
         </section>
+
+        <!-- SECTION PLANNING AVEC RECHERCHE -->
+        <section class="planning-section">
+            <h3> Événements à venir</h3>
+            
+            <!-- Barre de recherche -->
+            <div class="search-container">
+                <h4> Rechercher un événement</h4>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Tapez un mot-clé (ex: Portes, Cybersécurité, Paris...)">
+                    <button onclick="searchEvents()">Rechercher</button>
+                    <button onclick="resetSearch()" style="background:#f8bbd0; color:#ad1457;">Réinitialiser</button>
+                </div>
+                <div class="result-count" id="resultCount"></div>
+            </div>
+
+            <!-- Tableau des événements -->
+            <table class="event-table" id="eventTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Événement</th>
+                        <th>Lieu</th>
+                    </tr>
+                </thead>
+                <tbody id="eventList">
+                    
+                </tbody>
+            </table>
+        </section>
     </main>
 
     <footer>
@@ -49,5 +179,90 @@
         <p>&copy; 2025-2026 - Projet TI402</p>
     </footer>
 
-    <script src="script.js"></script> </body>
+    <script>
+        // === PLANNING AVEC RECHERCHE ===
+        
+        // Liste des événements (fixe)
+        const allEvents = [
+            { id: 1, date: "2026-05-15", name: "Portes Ouvertes EFREI", Bâtiment: "La Maison" },
+            { id: 2, date: "2026-05-22", name: "Conférence Cybersécurité", Bâtiment: "La Maison" },
+            { id: 3, date: "2026-06-05", name: "Présentation des alumnis", Bâtiment: "Factory" },
+            { id: 4, date: "2026-06-18", name: "Soutenance Projets IA", Bâtiment: "Factory" },
+            { id: 5, date: "2026-06-30", name: "Remise des diplômes", Bâtiment: "La Maison" },
+            { id: 6, date: "2026-09-10", name: "Rentrée des étudiants", Bâtiment: "La Maison" },
+            { id: 7, date: "2026-10-05", name: "Goûter d'intégration EFREI", Bâtiment: "La Maison" }
+        ];
+
+        let currentEvents = [...allEvents];
+
+        // Fonction pour formater la date en français
+        function formatDate(dateStr) {
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+        }
+
+        // Fonction pour afficher les événements
+        function displayEvents() {
+            const eventList = document.getElementById('eventList');
+            if (!eventList) return;
+            
+            // Trier par date (du plus proche au plus lointain)
+            const sorted = [...currentEvents].sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            const resultCount = document.getElementById('resultCount');
+            if (resultCount) {
+                const count = sorted.length;
+                resultCount.innerHTML = count === allEvents.length ? `${count} événements` : `${count} résultat(s) trouvé(s)`;
+            }
+            
+            if (sorted.length === 0) {
+                eventList.innerHTML = '<tr class="no-result"><td colspan="3">Aucun événement ne correspond à votre recherche.</td></tr>';
+                return;
+            }
+            
+            eventList.innerHTML = '';
+            sorted.forEach(event => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="event-date">${formatDate(event.date)}</td>
+                    <td class="event-name">${event.name}</td>
+                    <td class="event-Bâtiment"> ${event.Bâtiment}</td>
+                `;
+                eventList.appendChild(row);
+            });
+        }
+
+        // Fonction de recherche
+        function searchEvents() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                currentEvents = [...allEvents];
+            } else {
+                currentEvents = allEvents.filter(event => 
+                    event.name.toLowerCase().includes(searchTerm) ||
+                    event.Bâtiment.toLowerCase().includes(searchTerm) ||
+                    formatDate(event.date).toLowerCase().includes(searchTerm)
+                );
+            }
+            displayEvents();
+        }
+
+        // Fonction pour réinitialiser la recherche
+        function resetSearch() {
+            document.getElementById('searchInput').value = '';
+            currentEvents = [...allEvents];
+            displayEvents();
+        }
+
+        // Recherche en temps réel (quand on tape)
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            searchEvents();
+        });
+
+        // Initialisation au chargement
+        displayEvents();
+    </script>
+
+</body>
 </html>
